@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Shilpa Maurya Portfolio</title>
+
+    <style>
+        html { scroll-behavior: smooth; }
+
+        body {
+            margin: 0;
+            font-family: Arial;
+        }
+
+        /* Navbar */
+        .navbar {
+            background-color: #0a1f44;
+            padding: 15px;
+            text-align: center;
+        }
+
+        .navbar a {
+            color: white;
+            margin: 15px;
+            text-decoration: none;
+            font-size: 18px;
+        }
+
+        /* Sections */
+        .section {
+            padding: 60px;
+            text-align: center;
+        }
+
+        .home { background-color: #dbeafe; }
+        .about { background-color: #f2f2f2; }
+        .skills { background-color: #ffffff; }
+        .projects { background-color: #f2f2f2; }
+        .contact { background-color: #dbeafe; }
+
+        /* Profile */
+        .profile-img {
+            width: 150px;
+            height: 150px;
+            border-radius: 50%;
+            border: 3px solid #0a1f44;
+            object-fit: cover;
+            margin-top: 20px;
+        }
+
+        /* About Styling */
+        .about p {
+            max-width: 700px;
+            margin: 10px auto;
+            font-size: 16px;
+            line-height: 1.6;
+            color: #333;
+        }
+
+        /* Skills */
+        .skills-box {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 20px;
+        }
+
+        .skill {
+            background-color: #0a1f44;
+            color: white;
+            padding: 15px;
+            border-radius: 10px;
+            width: 130px;
+        }
+
+        /* Projects */
+        .projects-box {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 20px;
+        }
+
+        .project {
+            background-color: white;
+            padding: 25px;
+            width: 300px;
+            border-radius: 12px;
+            box-shadow: 0px 5px 15px rgba(0,0,0,0.1);
+            text-align: left;
+            transition: 0.3s;
+        }
+
+        .project:hover {
+            transform: translateY(-10px);
+        }
+
+        .project h3 {
+            color: #0a1f44;
+        }
+
+        .project p {
+            font-size: 14px;
+            color: #333;
+        }
+
+        /* Buttons */
+        button {
+            padding: 10px 20px;
+            background-color: #0a1f44;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            margin-top: 10px;
+        }
+
+        button:hover {
+            background-color: #163a7a;
+        }
+    </style>
+</head>
+
+<body>
+
+<!-- Navbar -->
+<div class="navbar">
+    <a href="#home">Home</a>
+    <a href="#about">About</a>
+    <a href="#skills">Skills</a>
+    <a href="#projects">Projects</a>
+    <a href="#contact">Contact</a>
+</div>
+
+<!-- Home -->
+<div id="home" class="section home">
+    <h1>Shilpa Maurya</h1>
+    <p><b>IoT Engineer | Python Developer</b></p>
+
+    <img src="pic.jpg" class="profile-img">
+
+    <p>Building smart IoT systems & automation solutions</p>
+
+    <button onclick="alert('Thanks for visiting 😊')">Say Hi</button>
+</div>
+
+<!-- About -->
+<div id="about" class="section about">
+    <h2>About Me</h2>
+
+    <p>
+        I am an <b>IoT Engineer</b> with hands-on experience in Python, embedded systems, and device automation.
+        I specialize in building scalable and reliable IoT solutions by integrating hardware, software, and real-time data systems.
+    </p>
+
+    <p>
+        My experience includes working with hardware interfaces, Linux-based systems, and system-level debugging.
+        I have deployed IoT devices, configured services, and implemented remote monitoring using modern tools and protocols.
+    </p>
+
+    <p>
+        Currently, I am expanding my skills in web development to bridge the gap between IoT devices and user-friendly applications,
+        building dashboards and connected platforms.
+    </p>
+
+    <p><b>Key Focus:</b> IoT Systems • Automation • Embedded • Real-time Data • Remote Device Management</p>
+
+    <!-- Highlight Box -->
+    <p style="background:#e6f0ff; padding:15px; border-left:5px solid #0a1f44; max-width:700px; margin:20px auto;">
+        💡 Experienced in end-to-end IoT deployment including device setup, system configuration, and remote access.
+    </p>
+</div>
+
+<!-- Skills -->
+<div id="skills" class="section skills">
+    <h2>Skills</h2>
+
+    <div class="skills-box">
+        <div class="skill">🐍 Python</div>
+        <div class="skill">🌐 HTML</div>
+        <div class="skill">🎨 CSS</div>
+        <div class="skill">⚙️ IoT</div>
+        <div class="skill">🔌 Embedded</div>
+        <div class="skill">📡 MQTT</div>
+    </div>
+</div>
+
+<!-- Projects -->
+<div id="projects" class="section projects">
+    <h2>Projects</h2>
+
+    <div class="projects-box">
+
+        <div class="project">
+            <h3>Smart RMC Quality Monitoring</h3>
+            <p><b>Problem:</b> RMC loses flowability during transit.</p>
+            <p><b>Solution:</b> IoT system using pressure data to control dosing.</p>
+            <p><b>Tech:</b> Python, IoT, Sensors</p>
+        </div>
+
+        <div class="project">
+            <h3>GPS Tracking System</h3>
+            <p><b>Solution:</b> Real-time vehicle tracking using SIM & MQTT.</p>
+            <p><b>Tech:</b> Python, GPS</p>
+        </div>
+
+        <div class="project">
+            <h3>GPIO Automation</h3>
+            <p><b>Solution:</b> Device control using Raspberry Pi.</p>
+            <p><b>Tech:</b> Python, GPIO</p>
+        </div>
+
+    </div>
+</div>
+
+<!-- Contact -->
+<div id="contact" class="section contact">
+    <h2>Contact</h2>
+    <p>Email: shilpa.maurya.6554@gmail.com</p>
+
+    <button onclick="alert('Contact feature coming soon 😊')">
+        Send Message
+    </button>
+</div>
+
+</body>
+</html>
