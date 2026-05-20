@@ -1,0 +1,567 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Site-wise Vehicle Labels - Daily Report</title>
+    <style>
+        @page {
+            size: A4;
+            margin: 0.5in;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Arial', sans-serif;
+            line-height: 1.4;
+            color: #333;
+            background: white;
+        }
+
+        .header {
+            text-align: center;
+            border-bottom: 3px solid #2c5aa0;
+            padding-bottom: 20px;
+            margin-bottom: 25px;
+        }
+
+        .company-logo {
+            font-size: 24px;
+            font-weight: bold;
+            color: #2c5aa0;
+            margin-bottom: 5px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+        }
+
+        .logo-img {
+            height: 40px;
+            width: auto;
+        }
+
+        .report-title {
+            font-size: 20px;
+            font-weight: bold;
+            color: #333;
+            margin-bottom: 8px;
+        }
+
+        .report-date {
+            font-size: 14px;
+            color: #666;
+            background: #f0f0f0;
+            padding: 5px 15px;
+            border-radius: 15px;
+            display: inline-block;
+        }
+
+        .site-section {
+            page-break-inside: avoid;
+            margin-bottom: 30px;
+            border: 2px solid #e0e0e0;
+            border-radius: 8px;
+            overflow: hidden;
+        }
+
+        .site-header {
+            background: #2c5aa0;
+            color: white;
+            padding: 15px 20px;
+        }
+
+        .site-title {
+            font-size: 18px;
+            font-weight: bold;
+            margin-bottom: 8px;
+        }
+
+        .site-stats {
+            display: flex;
+            justify-content: space-between;
+            font-size: 12px;
+            flex-wrap: wrap;
+            gap: 15px;
+        }
+
+        .stat-box {
+            background: rgba(255,255,255,0.1);
+            padding: 5px 10px;
+            border-radius: 4px;
+            text-align: center;
+            min-width: 80px;
+        }
+
+        .stat-label {
+            display: block;
+            font-size: 10px;
+            opacity: 0.8;
+        }
+
+        .stat-value {
+            display: block;
+            font-size: 14px;
+            font-weight: bold;
+        }
+
+        .vehicles-container {
+            padding: 20px;
+        }
+
+        .vehicles-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 15px;
+        }
+
+        .vehicle-card {
+            border: 1px solid #ddd;
+            border-radius: 6px;
+            padding: 12px;
+            background: #fafafa;
+            page-break-inside: avoid;
+        }
+
+        .vehicle-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 10px;
+            padding-bottom: 8px;
+            border-bottom: 1px solid #eee;
+        }
+
+        .vehicle-number {
+            font-size: 14px;
+            font-weight: bold;
+            color: #2c5aa0;
+        }
+
+        .status-badge {
+            padding: 2px 8px;
+            border-radius: 10px;
+            font-size: 10px;
+            font-weight: bold;
+            text-transform: uppercase;
+        }
+
+        .status-active {
+            background: #d4edda;
+            color: #155724;
+            border: 1px solid #c3e6cb;
+        }
+
+        .status-inactive {
+            background: #f8d7da;
+            color: #721c24;
+            border: 1px solid #f5c6cb;
+        }
+
+        .device-info {
+            font-size: 11px;
+            color: #666;
+            margin-bottom: 8px;
+            font-family: 'Courier New', monospace;
+            background: #f0f0f0;
+            padding: 4px 8px;
+            border-radius: 4px;
+        }
+
+        .details-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 8px;
+            font-size: 11px;
+        }
+
+        .detail-item {
+            display: flex;
+            justify-content: space-between;
+            padding: 3px 0;
+        }
+
+        .detail-label {
+            color: #666;
+            font-weight: normal;
+        }
+
+        .detail-value {
+            font-weight: bold;
+            color: #333;
+        }
+
+        .tank-level {
+            display: flex;
+            align-items: center;
+            gap: 4px;
+        }
+
+        .tank-indicator {
+            width: 12px;
+            height: 12px;
+            border-radius: 2px;
+            font-size: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: bold;
+        }
+
+        .tank-low { background: #dc3545; }
+        .tank-medium { background: #ffc107; color: #000; }
+        .tank-high { background: #28a745; }
+
+        .summary-section {
+            margin-top: 25px;
+            padding: 15px;
+            background: #f8f9fa;
+            border: 1px solid #dee2e6;
+            border-radius: 6px;
+            page-break-inside: avoid;
+        }
+
+        .summary-title {
+            font-size: 16px;
+            font-weight: bold;
+            color: #2c5aa0;
+            margin-bottom: 10px;
+            text-align: center;
+            border-bottom: 1px solid #ddd;
+            padding-bottom: 5px;
+        }
+
+        .summary-grid {
+            display: grid;
+            grid-template-columns: repeat(5, 1fr);
+            gap: 10px;
+            text-align: center;
+            font-size: 12px;
+        }
+
+        .summary-item {
+            padding: 8px;
+            background: white;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+        }
+
+        .summary-label {
+            display: block;
+            color: #666;
+            font-size: 10px;
+            margin-bottom: 3px;
+        }
+
+        .summary-value {
+            display: block;
+            font-weight: bold;
+            font-size: 14px;
+            color: #2c5aa0;
+        }
+
+        .footer {
+            margin-top: 30px;
+            text-align: center;
+            font-size: 10px;
+            color: #666;
+            border-top: 1px solid #ddd;
+            padding-top: 10px;
+        }
+
+        .download-section {
+            background: linear-gradient(135deg, #4CAF50, #45a049);
+            padding: 20px;
+            text-align: center;
+            margin-bottom: 20px;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+        }
+
+        .download-btn {
+            background: white;
+            color: #4CAF50;
+            border: none;
+            padding: 15px 30px;
+            font-size: 16px;
+            font-weight: bold;
+            border-radius: 25px;
+            cursor: pointer;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+            transition: all 0.3s ease;
+            margin-bottom: 10px;
+        }
+
+        .download-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 16px rgba(0,0,0,0.3);
+            background: #f8f9fa;
+        }
+
+        .download-note {
+            color: white;
+            font-size: 12px;
+            margin: 0;
+            opacity: 0.9;
+        }
+
+        @media print {
+            .download-section {
+                display: none;
+            }
+        }
+
+        @media screen {
+            body {
+                max-width: 210mm;
+                margin: 0 auto;
+                padding: 20px;
+                box-shadow: 0 0 10px rgba(0,0,0,0.1);
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="download-section">
+        <button onclick="downloadPDF()" class="download-btn">
+            📄 Download PDF Report
+        </button>
+        <p class="download-note">Click the button above to automatically download this report as a PDF file</p>
+    </div>
+
+    <div class="header">
+        <div class="company-logo">
+            🏗️ JANYU TECH
+        </div>
+        <div class="report-title">Daily Vehicle Performance Report</div>
+        <div class="report-date">📅 Date: 30/05/2025</div>
+    </div>
+
+    <div class="site-section">
+        <div class="site-header">
+            <div class="site-title">🏢 UltraTech Mumbai BKC</div>
+            <div class="site-stats">
+                <div class="stat-box">
+                    <span class="stat-label">Total Vehicles</span>
+                    <span class="stat-value">5</span>
+                </div>
+                <div class="stat-box">
+                    <span class="stat-label">Active</span>
+                    <span class="stat-value">4</span>
+                </div>
+                <div class="stat-box">
+                    <span class="stat-label">Inactive</span>
+                    <span class="stat-value">1</span>
+                </div>
+                <div class="stat-box">
+                    <span class="stat-label">Auto Dose</span>
+                    <span class="stat-value">2</span>
+                </div>
+                <div class="stat-box">
+                    <span class="stat-label">Total Trips</span>
+                    <span class="stat-value">11</span>
+                </div>
+                <div class="stat-box">
+                    <span class="stat-label">Region</span>
+                    <span class="stat-value">MMR</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="vehicles-container">
+            <div class="vehicles-grid">
+                
+                <div class="vehicle-card">
+                    <div class="vehicle-header">
+                        <div class="vehicle-number">MH04KU5227</div>
+                        <div class="status-badge status-active">Active</div>
+                    </div>
+                    <div class="device-info">📟 Device: UbiqCM454</div>
+                    <div class="details-grid">
+                        <div class="detail-item">
+                            <span class="detail-label">Trips:</span>
+                            <span class="detail-value">3</span>
+                        </div>
+                        <div class="detail-item">
+                            <span class="detail-label">Auto Dose:</span>
+                            <span class="detail-value">0</span>
+                        </div>
+                        <div class="detail-item">
+                            <span class="detail-label">Dosing Count:</span>
+                            <span class="detail-value">0</span>
+                        </div>
+                        <div class="detail-item">
+                            <span class="detail-label">Tank Level:</span>
+                            <span class="detail-value tank-level">
+                                <div class="tank-indicator tank-low">!</div>5L
+                            </span>
+                        </div>
+                    </div>
+                </div>
+                <div class="vehicle-card">
+                    <div class="vehicle-header">
+                        <div class="vehicle-number">MH04KU0156</div>
+                        <div class="status-badge status-active">Active</div>
+                    </div>
+                    <div class="device-info">📟 Device: UbiqCM432</div>
+                    <div class="details-grid">
+                        <div class="detail-item">
+                            <span class="detail-label">Trips:</span>
+                            <span class="detail-value">3</span>
+                        </div>
+                        <div class="detail-item">
+                            <span class="detail-label">Auto Dose:</span>
+                            <span class="detail-value">0</span>
+                        </div>
+                        <div class="detail-item">
+                            <span class="detail-label">Dosing Count:</span>
+                            <span class="detail-value">0</span>
+                        </div>
+                        <div class="detail-item">
+                            <span class="detail-label">Tank Level:</span>
+                            <span class="detail-value tank-level">
+                                <div class="tank-indicator tank-low">!</div>5L
+                            </span>
+                        </div>
+                    </div>
+                </div>
+                <div class="vehicle-card">
+                    <div class="vehicle-header">
+                        <div class="vehicle-number">MH04KU5221</div>
+                        <div class="status-badge status-active">Active</div>
+                    </div>
+                    <div class="device-info">📟 Device: UbiqCM433</div>
+                    <div class="details-grid">
+                        <div class="detail-item">
+                            <span class="detail-label">Trips:</span>
+                            <span class="detail-value">2</span>
+                        </div>
+                        <div class="detail-item">
+                            <span class="detail-label">Auto Dose:</span>
+                            <span class="detail-value">1</span>
+                        </div>
+                        <div class="detail-item">
+                            <span class="detail-label">Dosing Count:</span>
+                            <span class="detail-value">3</span>
+                        </div>
+                        <div class="detail-item">
+                            <span class="detail-label">Tank Level:</span>
+                            <span class="detail-value tank-level">
+                                <div class="tank-indicator tank-low">!</div>5L
+                            </span>
+                        </div>
+                    </div>
+                </div>
+                <div class="vehicle-card">
+                    <div class="vehicle-header">
+                        <div class="vehicle-number">MH43BP1275</div>
+                        <div class="status-badge status-active">Active</div>
+                    </div>
+                    <div class="device-info">📟 Device: UbiqCM417</div>
+                    <div class="details-grid">
+                        <div class="detail-item">
+                            <span class="detail-label">Trips:</span>
+                            <span class="detail-value">2</span>
+                        </div>
+                        <div class="detail-item">
+                            <span class="detail-label">Auto Dose:</span>
+                            <span class="detail-value">1</span>
+                        </div>
+                        <div class="detail-item">
+                            <span class="detail-label">Dosing Count:</span>
+                            <span class="detail-value">1</span>
+                        </div>
+                        <div class="detail-item">
+                            <span class="detail-label">Tank Level:</span>
+                            <span class="detail-value tank-level">
+                                <div class="tank-indicator tank-medium">⚠</div>8L
+                            </span>
+                        </div>
+                    </div>
+                </div>
+                <div class="vehicle-card">
+                    <div class="vehicle-header">
+                        <div class="vehicle-number">MH04LY1081</div>
+                        <div class="status-badge status-inactive">Inactive</div>
+                    </div>
+                    <div class="device-info">📟 Device: UbiqCM439</div>
+                    <div class="details-grid">
+                        <div class="detail-item">
+                            <span class="detail-label">Trips:</span>
+                            <span class="detail-value">1</span>
+                        </div>
+                        <div class="detail-item">
+                            <span class="detail-label">Auto Dose:</span>
+                            <span class="detail-value">0</span>
+                        </div>
+                        <div class="detail-item">
+                            <span class="detail-label">Dosing Count:</span>
+                            <span class="detail-value">0</span>
+                        </div>
+                        <div class="detail-item">
+                            <span class="detail-label">Tank Level:</span>
+                            <span class="detail-value tank-level">
+                                <div class="tank-indicator tank-high">✓</div>18L
+                            </span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="summary-section">
+        <div class="summary-title">📊 Daily Performance Summary</div>
+        <div class="summary-grid">
+            <div class="summary-item">
+                <span class="summary-label">TOTAL VEHICLES</span>
+                <span class="summary-value">5</span>
+            </div>
+            <div class="summary-item">
+                <span class="summary-label">ACTIVE VEHICLES</span>
+                <span class="summary-value">4</span>
+            </div>
+            <div class="summary-item">
+                <span class="summary-label">TOTAL TRIPS</span>
+                <span class="summary-value">11</span>
+            </div>
+            <div class="summary-item">
+                <span class="summary-label">AUTO DOSE TRIPS</span>
+                <span class="summary-value">2</span>
+            </div>
+            <div class="summary-item">
+                <span class="summary-label">LOW TANK ALERTS</span>
+                <span class="summary-value">3</span>
+            </div>
+        </div>
+    </div>
+
+    <div class="footer">
+        <p><strong>Report Generated:</strong> 30/05/2025 | <strong>Site:</strong> UltraTech Mumbai BKC | <strong>Region:</strong> MMR</p>
+        <p>⚠️ <strong>Action Required:</strong> 3 vehicles have low tank levels (≤6L) - Please refill before day end</p>
+        <p><em>This is an automated report generated from vehicle monitoring systems</em></p>
+    </div>
+
+    <script>
+        function downloadPDF() {
+            const downloadSection = document.querySelector('.download-section');
+            downloadSection.style.display = 'none';
+            
+            const title = 'Vehicle_Report_30-05-2025_{site_data.get("name", "Site").replace(" ", "_")}';
+            document.title = title;
+            
+            window.print();
+            
+            setTimeout(() => {
+                downloadSection.style.display = 'block';
+            }, 1000);
+        }
+    </script>
+</body>
+</html>
